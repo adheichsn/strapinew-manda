@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tarif_dasars",
+  "info": {
+    "singularName": "tarif-dasar",
+    "pluralName": "tarif-dasars",
+    "displayName": "tarif_dasar"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tarif_dasar": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tarif-dasar.tarif-dasar"
+    }
+  }
+}

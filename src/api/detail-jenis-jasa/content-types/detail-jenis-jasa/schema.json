@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "detail_jenis_jasas",
+  "info": {
+    "singularName": "detail-jenis-jasa",
+    "pluralName": "detail-jenis-jasas",
+    "displayName": "detail_jenis_jasa",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "detail_jenis_jasa": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detail-jenis-jasa.detail-jenis-jasa"
+    }
+  }
+}

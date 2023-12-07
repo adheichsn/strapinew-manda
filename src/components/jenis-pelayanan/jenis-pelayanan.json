@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_jenis_pelayanan_jenis_pelayanans",
+  "info": {
+    "displayName": "jenis_pelayanan",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "jenis_pelayanan": {
+      "type": "string"
+    },
+    "satuan_tarif": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::satuan-bayar.satuan-bayar"
+    }
+  }
+}

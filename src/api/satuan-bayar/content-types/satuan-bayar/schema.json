@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "satuan_bayars",
+  "info": {
+    "singularName": "satuan-bayar",
+    "pluralName": "satuan-bayars",
+    "displayName": "satuan_bayar"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "satuan_bayar": {
+      "type": "component",
+      "repeatable": true,
+      "component": "satuan-bayar.satuan-bayar"
+    }
+  }
+}

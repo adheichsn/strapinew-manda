@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jasa_labuhs",
+  "info": {
+    "singularName": "jasa-labuh",
+    "pluralName": "jasa-labuhs",
+    "displayName": "jasa_labuh",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jasa_labuh": {
+      "displayName": "jasa_labuh",
+      "type": "component",
+      "repeatable": false,
+      "component": "jasa-labuh.jasa-labuh"
+    }
+  }
+}

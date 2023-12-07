@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jasa_kapals",
+  "info": {
+    "singularName": "jasa-kapal",
+    "pluralName": "jasa-kapals",
+    "displayName": "data_kapal",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "data_kapal": {
+      "type": "component",
+      "repeatable": true,
+      "component": "data-kapal.kapal"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jenis_kapals",
+  "info": {
+    "singularName": "jenis-kapal",
+    "pluralName": "jenis-kapals",
+    "displayName": "jenis_kapal"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jenis_kapal": {
+      "type": "component",
+      "repeatable": true,
+      "component": "jenis-kapal.jenis-kapal"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_satuan_bayar_satuan_bayars",
+  "info": {
+    "displayName": "satuan_bayar"
+  },
+  "options": {},
+  "attributes": {
+    "satuan_tarif": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_status_service_status_services",
+  "info": {
+    "displayName": "status_service"
+  },
+  "options": {},
+  "attributes": {
+    "status": {
+      "type": "string"
+    }
+  }
+}

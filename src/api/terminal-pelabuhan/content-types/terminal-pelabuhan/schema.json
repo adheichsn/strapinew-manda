@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "terminal_pelabuhans",
+  "info": {
+    "singularName": "terminal-pelabuhan",
+    "pluralName": "terminal-pelabuhans",
+    "displayName": "terminal_pelabuhan"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "terminal_pelabuhan": {
+      "type": "component",
+      "repeatable": true,
+      "component": "terminal-pelabuhan.terminal-pelabuhan"
+    }
+  }
+}

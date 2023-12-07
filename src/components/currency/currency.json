@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_currency_currencies",
+  "info": {
+    "displayName": "currency"
+  },
+  "options": {},
+  "attributes": {
+    "amount": {
+      "type": "decimal"
+    },
+    "date": {
+      "type": "date"
+    },
+    "rate_dollar": {
+      "type": "decimal"
+    }
+  }
+}

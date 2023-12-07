@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_detail_jenis_jasa_detail_jenis_jasas",
+  "info": {
+    "displayName": "detail_jenis_jasa",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "detail_jenis_jasa": {
+      "type": "string"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-pelayanan.jenis-pelayanan"
+    },
+    "nama_jasa": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-jasa.jenis-jasa"
+    }
+  }
+}

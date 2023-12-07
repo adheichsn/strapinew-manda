@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_tarif_pandu_tarif_pandus",
+  "info": {
+    "displayName": "tarif_pandu"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
+    }
+  }
+}

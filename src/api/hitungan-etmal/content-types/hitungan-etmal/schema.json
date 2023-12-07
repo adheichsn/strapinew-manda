@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hitungan_etmals",
+  "info": {
+    "singularName": "hitungan-etmal",
+    "pluralName": "hitungan-etmals",
+    "displayName": "hitungan_etmal"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hitungan_etmal": {
+      "type": "component",
+      "repeatable": true,
+      "component": "hitungan-etmal.hitungan-etmal"
+    }
+  }
+}

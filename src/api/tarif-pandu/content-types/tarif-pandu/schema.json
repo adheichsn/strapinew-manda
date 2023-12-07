@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tarif_pandus",
+  "info": {
+    "singularName": "tarif-pandu",
+    "pluralName": "tarif-pandus",
+    "displayName": "tarif_pandu"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tarif_pandu": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tarif-pandu.tarif-pandu"
+    }
+  }
+}

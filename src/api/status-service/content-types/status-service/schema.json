@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "status_services",
+  "info": {
+    "singularName": "status-service",
+    "pluralName": "status-services",
+    "displayName": "status_service"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "status_service": {
+      "type": "component",
+      "repeatable": true,
+      "component": "status-service.status-service"
+    }
+  }
+}

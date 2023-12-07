@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "role_users",
+  "info": {
+    "singularName": "role-user",
+    "pluralName": "role-users",
+    "displayName": "role_user"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "role_user": {
+      "type": "component",
+      "repeatable": true,
+      "component": "role-user.role-user"
+    }
+  }
+}

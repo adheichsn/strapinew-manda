@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "currencies",
+  "info": {
+    "singularName": "currency",
+    "pluralName": "currencies",
+    "displayName": "currency"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "currency": {
+      "type": "component",
+      "repeatable": true,
+      "component": "currency.currency"
+    }
+  }
+}
