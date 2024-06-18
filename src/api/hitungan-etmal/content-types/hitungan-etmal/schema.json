@@ -11,10 +11,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "hitungan_etmal": {
-      "type": "component",
-      "repeatable": true,
-      "component": "hitungan-etmal.hitungan-etmal"
+    "name": {
+      "type": "string"
+    },
+    "dasar_etmal": {
+      "type": "float"
     }
   }
 }

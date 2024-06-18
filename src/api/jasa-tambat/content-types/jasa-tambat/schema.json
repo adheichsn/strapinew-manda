@@ -1,0 +1,98 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jasa_tambats",
+  "info": {
+    "singularName": "jasa-tambat",
+    "pluralName": "jasa-tambats",
+    "displayName": "jasa_tambat",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "start_layanan": {
+      "type": "datetime"
+    },
+    "finish_layanan": {
+      "type": "datetime"
+    },
+    "gt_kapal": {
+      "type": "integer"
+    },
+    "pandu": {
+      "type": "string"
+    },
+    "total_etmal": {
+      "type": "integer"
+    },
+    "total_tarif": {
+      "type": "decimal"
+    },
+    "description": {
+      "type": "text"
+    },
+    "name": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "data_kapal": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-kapal.data-kapal"
+    },
+    "jenis_kapal": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-kapal.jenis-kapal"
+    },
+    "jenis_jasa": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-jasa.jenis-jasa"
+    },
+    "detail_jenis_jasa": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detail-jenis-jasa.detail-jenis-jasa"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-pelayanan.jenis-pelayanan"
+    },
+    "tarif_pandu": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-pandu.tarif-pandu"
+    },
+    "status": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::status-service.status-service"
+    },
+    "file": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "tarif_dasar": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-dasar.tarif-dasar"
+    },
+    "assign_to_id": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::roless.roless"
+    }
+  }
+}

@@ -11,10 +11,8 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "terminal_pelabuhan": {
-      "type": "component",
-      "repeatable": true,
-      "component": "terminal-pelabuhan.terminal-pelabuhan"
+    "name": {
+      "type": "string"
     }
   }
 }

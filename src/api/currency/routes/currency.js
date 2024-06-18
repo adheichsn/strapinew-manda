@@ -11,12 +11,12 @@ module.exports = createCoreRouter('api::currency.currency',
     config: {
         find: {
             middlewares: [
-                'api::currency.currency'
+                'api::currency.currencies'
             ]
         },
         findOne: {
             middlewares: [
-                'api::currency.currency'
+                'api::currency.currencies'
             ]
         }
     }

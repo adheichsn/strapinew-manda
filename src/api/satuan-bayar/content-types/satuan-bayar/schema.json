@@ -11,10 +11,8 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "satuan_bayar": {
-      "type": "component",
-      "repeatable": true,
-      "component": "satuan-bayar.satuan-bayar"
+    "satuan_tarif": {
+      "type": "string"
     }
   }
 }

@@ -6,4 +6,19 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::terminal-pelabuhan.terminal-pelabuhan');
+module.exports = createCoreRouter('api::terminal-pelabuhan.terminal-pelabuhan',
+{
+    config: {
+        find: {
+            middlewares: [
+                'api::terminal-pelabuhan.terminalpelabuhans'
+            ]
+        },
+        findOne: {
+            middlewares: [
+                'api::terminal-pelabuhan.terminalpelabuhans'
+            ]
+        }
+    }
+}
+);

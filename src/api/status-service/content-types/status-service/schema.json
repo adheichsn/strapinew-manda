@@ -11,10 +11,8 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "status_service": {
-      "type": "component",
-      "repeatable": true,
-      "component": "status-service.status-service"
+    "status": {
+      "type": "string"
     }
   }
 }

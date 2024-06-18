@@ -4,17 +4,18 @@
   "info": {
     "singularName": "countrie",
     "pluralName": "countries",
-    "displayName": "countries"
+    "displayName": "countrie"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "countries": {
-      "type": "component",
-      "repeatable": true,
-      "component": "countries.countries"
+    "name": {
+      "type": "string"
+    },
+    "short_code": {
+      "type": "string"
     }
   }
 }

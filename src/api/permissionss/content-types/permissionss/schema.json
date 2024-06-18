@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "permissionsss",
+  "info": {
+    "singularName": "permissionss",
+    "pluralName": "permissionsss",
+    "displayName": "permission"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

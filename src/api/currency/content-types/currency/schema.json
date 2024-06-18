@@ -11,10 +11,14 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "currency": {
-      "type": "component",
-      "repeatable": true,
-      "component": "currency.currency"
+    "amount": {
+      "type": "decimal"
+    },
+    "date": {
+      "type": "date"
+    },
+    "rate_dollar": {
+      "type": "decimal"
     }
   }
 }

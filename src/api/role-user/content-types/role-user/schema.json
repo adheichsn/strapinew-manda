@@ -11,10 +11,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "role_user": {
-      "type": "component",
-      "repeatable": true,
-      "component": "role-user.role-user"
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "roles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::roless.roless"
     }
   }
 }

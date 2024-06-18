@@ -11,10 +11,8 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "jenis_jasa": {
-      "type": "component",
-      "repeatable": true,
-      "component": "jenis-jasa.jenis-jasa"
+    "nama_jasa": {
+      "type": "string"
     }
   }
 }

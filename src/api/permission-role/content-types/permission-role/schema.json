@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "permission_roles",
+  "info": {
+    "singularName": "permission-role",
+    "pluralName": "permission-roles",
+    "displayName": "permission_role"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "roles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::roless.roless"
+    }
+  }
+}

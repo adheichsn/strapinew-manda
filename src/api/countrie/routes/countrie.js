@@ -6,14 +6,19 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::countrie.countrie', {
+module.exports = createCoreRouter('api::countrie.countrie', 
+{
     config: {
         find: {
-            middlewares: ['api::countrie.countrie'],
+            middlewares: [
+                'api::countrie.countries'
+            ]
         },
         findOne: {
-            middlewares: ['api::countrie.countrie'],
+            middlewares: [
+                'api::countrie.countries'
+            ]
         }
     }
-});
-  
+}
+);

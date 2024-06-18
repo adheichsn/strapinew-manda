@@ -12,9 +12,7 @@
   "pluginOptions": {},
   "attributes": {
     "jenis_kapal": {
-      "type": "component",
-      "repeatable": true,
-      "component": "jenis-kapal.jenis-kapal"
+      "type": "string"
     }
   }
 }

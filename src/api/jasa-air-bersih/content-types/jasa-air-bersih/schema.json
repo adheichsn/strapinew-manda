@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jasa_air_bersihs",
+  "info": {
+    "singularName": "jasa-air-bersih",
+    "pluralName": "jasa-air-bersihs",
+    "displayName": "jasa_air_bersih",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "start_layanan": {
+      "type": "datetime"
+    },
+    "finish_layanan": {
+      "type": "datetime"
+    },
+    "qty": {
+      "type": "integer"
+    },
+    "total_tarif": {
+      "type": "decimal"
+    },
+    "keterangan": {
+      "type": "string"
+    },
+    "data_kapal": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::data-kapal.data-kapal"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-pelayanan.jenis-pelayanan"
+    },
+    "tarif_dasar": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-dasar.tarif-dasar"
+    },
+    "status": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::status-service.status-service"
+    },
+    "assign_to_id": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::roless.roless"
+    },
+    "satuan_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::satuan-detail.satuan-detail"
+    },
+    "file": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

@@ -13,9 +13,17 @@
   "pluginOptions": {},
   "attributes": {
     "detail_jenis_jasa": {
-      "type": "component",
-      "repeatable": true,
-      "component": "detail-jenis-jasa.detail-jenis-jasa"
+      "type": "string"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-pelayanan.jenis-pelayanan"
+    },
+    "nama_jasa": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jenis-jasa.jenis-jasa"
     }
   }
 }

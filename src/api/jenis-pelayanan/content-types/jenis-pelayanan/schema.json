@@ -4,7 +4,8 @@
   "info": {
     "singularName": "jenis-pelayanan",
     "pluralName": "jenis-pelayanans",
-    "displayName": "jenis_pelayanan"
+    "displayName": "jenis_pelayanan",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,9 +13,12 @@
   "pluginOptions": {},
   "attributes": {
     "jenis_pelayanan": {
-      "type": "component",
-      "repeatable": true,
-      "component": "jenis-pelayanan.jenis-pelayanan"
+      "type": "string"
+    },
+    "satuan_tarif": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::satuan-bayar.satuan-bayar"
     }
   }
 }

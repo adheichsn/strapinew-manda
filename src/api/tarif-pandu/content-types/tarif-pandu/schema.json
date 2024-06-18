@@ -11,10 +11,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "tarif_pandu": {
-      "type": "component",
-      "repeatable": true,
-      "component": "tarif-pandu.tarif-pandu"
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
     }
   }
 }
