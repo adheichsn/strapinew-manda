@@ -4,21 +4,37 @@
   "info": {
     "singularName": "currency",
     "pluralName": "currencies",
-    "displayName": "currency"
+    "displayName": "Currency"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "amount": {
-      "type": "decimal"
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
     },
-    "date": {
-      "type": "date"
+    "label": {
+      "type": "string",
+      "required": true
     },
-    "rate_dollar": {
-      "type": "decimal"
+    "symbol": {
+      "type": "string",
+      "required": true
+    },
+    "tarif_dasars": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-dasar.tarif-dasar",
+      "mappedBy": "currency"
+    },
+    "tarif_pandus": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-pandu.tarif-pandu",
+      "mappedBy": "currency"
     }
   }
 }

@@ -4,15 +4,36 @@
   "info": {
     "singularName": "jenis-kapal",
     "pluralName": "jenis-kapals",
-    "displayName": "jenis_kapal"
+    "displayName": "Jenis Kapal"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "jenis_kapal": {
-      "type": "string"
+    "jenis": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "kapals": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kapal.kapal",
+      "mappedBy": "jenis_kapal"
+    },
+    "jasas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jasa.jasa",
+      "mappedBy": "jenis_kapal"
     }
   }
 }

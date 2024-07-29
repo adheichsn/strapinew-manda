@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "satuan_jasas",
+  "info": {
+    "singularName": "satuan-jasa",
+    "pluralName": "satuan-jasas",
+    "displayName": "Satuan Jasa"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "satuan": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "jasas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jasa.jasa",
+      "mappedBy": "satuan_jasa"
+    }
+  }
+}

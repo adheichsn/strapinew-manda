@@ -4,18 +4,47 @@
   "info": {
     "singularName": "tarif-pandu",
     "pluralName": "tarif-pandus",
-    "displayName": "tarif_pandu"
+    "displayName": "Tarif Pandu"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
+    "tarif": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
     },
-    "price": {
-      "type": "decimal"
+    "jenis_pandu": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pandu.jenis-pandu",
+      "inversedBy": "tarif_pandus"
+    },
+    "currency": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::currency.currency",
+      "inversedBy": "tarif_pandus"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pelayanan.jenis-pelayanan",
+      "inversedBy": "tarif_pandus"
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "tarif_pandu"
+    },
+    "order_tambats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "tarif_pandu"
     }
   }
 }

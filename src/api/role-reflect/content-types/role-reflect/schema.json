@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "role_reflects",
+  "info": {
+    "singularName": "role-reflect",
+    "pluralName": "role-reflects",
+    "displayName": "Role Reflect"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "role": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "role_reflect"
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "role_reflect"
+    },
+    "order_tambats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "role_reflect"
+    },
+    "order_yatches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-yatch.order-yatch",
+      "mappedBy": "role_reflect"
+    },
+    "order_air_bersihs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-air-bersih.order-air-bersih",
+      "mappedBy": "role_reflect"
+    }
+  }
+}

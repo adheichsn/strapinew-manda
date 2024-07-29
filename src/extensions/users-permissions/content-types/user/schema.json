@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -65,6 +64,30 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "users_permissions_user"
+    },
+    "role_reflect": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::role-reflect.role-reflect",
+      "inversedBy": "users"
+    },
+    "order_tambats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "users_permissions_user"
+    },
+    "order_yatches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-yatch.order-yatch",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

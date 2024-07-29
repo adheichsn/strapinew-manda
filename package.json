@@ -1,5 +1,5 @@
 {
-  "name": "jasa",
+  "name": "palka-backend",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -7,27 +7,29 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "deploy": "strapi deploy"
   },
   "dependencies": {
     "@strapi-community/strapi-provider-upload-google-cloud-storage": "^4.10.5",
-    "@strapi/plugin-cloud": "4.15.4",
-    "@strapi/plugin-i18n": "4.15.4",
-    "@strapi/plugin-users-permissions": "4.15.4",
-    "@strapi/strapi": "4.15.4",
+    "@strapi/plugin-cloud": "4.25.5",
+    "@strapi/plugin-i18n": "4.25.5",
+    "@strapi/plugin-users-permissions": "4.25.5",
+    "@strapi/strapi": "4.25.5",
     "better-sqlite3": "8.6.0",
     "pg": "^8.12.0",
     "pg-connection-string": "^2.6.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
+    "strapi-provider-upload-do": "^3.6.9",
     "styled-components": "5.3.3"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "e8f41b5d-7ae4-4636-bf7f-75b41ec3fef3"
+    "uuid": "99a3fe1c-1b12-4ba2-a343-d1a1359add67"
   },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",

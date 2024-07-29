@@ -1,0 +1,94 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_air_bersihs",
+  "info": {
+    "singularName": "order-air-bersih",
+    "pluralName": "order-air-bersihs",
+    "displayName": "Order Air Bersih",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "start_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "finish_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "total_tarif": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "description": {
+      "type": "text"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "payment_deadline": {
+      "type": "datetime",
+      "required": true
+    },
+    "snap_token": {
+      "type": "text"
+    },
+    "attachment": {
+      "type": "string"
+    },
+    "payment_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::payment-status.payment-status",
+      "inversedBy": "order_air_bersihs"
+    },
+    "jasa": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jasa.jasa",
+      "inversedBy": "order_air_bersihs"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pelayanan.jenis-pelayanan",
+      "inversedBy": "order_air_bersihs"
+    },
+    "kapal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kapal.kapal",
+      "inversedBy": "order_air_bersihs"
+    },
+    "tarif_dasar": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tarif-dasar.tarif-dasar",
+      "inversedBy": "order_air_bersihs"
+    },
+    "service_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-status.service-status",
+      "inversedBy": "order_air_bersihs"
+    },
+    "role_reflect": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::role-reflect.role-reflect",
+      "inversedBy": "order_air_bersihs"
+    }
+  }
+}

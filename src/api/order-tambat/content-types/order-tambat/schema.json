@@ -1,0 +1,110 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_tambats",
+  "info": {
+    "singularName": "order-tambat",
+    "pluralName": "order-tambats",
+    "displayName": "Order Tambat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "start_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "finish_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "gt_kapal": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "total_etmal": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "total_tarif": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "description": {
+      "type": "text"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "payment_deadline": {
+      "type": "datetime",
+      "required": true
+    },
+    "snap_token": {
+      "type": "text"
+    },
+    "attachment": {
+      "type": "string"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "order_tambats"
+    },
+    "payment_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::payment-status.payment-status",
+      "inversedBy": "order_tambats"
+    },
+    "jasa": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jasa.jasa",
+      "inversedBy": "order_tambats"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pelayanan.jenis-pelayanan",
+      "inversedBy": "order_tambats"
+    },
+    "kapal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kapal.kapal",
+      "inversedBy": "order_tambats"
+    },
+    "tarif_dasar": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tarif-dasar.tarif-dasar",
+      "inversedBy": "order_tambats"
+    },
+    "tarif_pandu": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tarif-pandu.tarif-pandu",
+      "inversedBy": "order_tambats"
+    },
+    "service_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-status.service-status",
+      "inversedBy": "order_tambats"
+    },
+    "role_reflect": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::role-reflect.role-reflect",
+      "inversedBy": "order_tambats"
+    }
+  }
+}

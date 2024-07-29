@@ -4,15 +4,30 @@
   "info": {
     "singularName": "jenis-jasa",
     "pluralName": "jenis-jasas",
-    "displayName": "jenis_jasa"
+    "displayName": "Jenis Jasa"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "nama_jasa": {
-      "type": "string"
+    "jenis": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "jasas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jasa.jasa",
+      "mappedBy": "jenis_jasa"
     }
   }
 }

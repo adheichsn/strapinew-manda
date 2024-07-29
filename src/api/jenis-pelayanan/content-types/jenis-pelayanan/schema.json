@@ -4,21 +4,66 @@
   "info": {
     "singularName": "jenis-pelayanan",
     "pluralName": "jenis-pelayanans",
-    "displayName": "jenis_pelayanan",
-    "description": ""
+    "displayName": "Jenis Pelayanan"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "jenis_pelayanan": {
-      "type": "string"
+    "jenis": {
+      "type": "string",
+      "required": true,
+      "unique": true
     },
-    "satuan_tarif": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "jasas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::jasa.jasa",
+      "mappedBy": "jenis_pelayanans"
+    },
+    "tarif_dasars": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::satuan-bayar.satuan-bayar"
+      "target": "api::tarif-dasar.tarif-dasar",
+      "mappedBy": "jenis_pelayanan"
+    },
+    "tarif_pandus": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-pandu.tarif-pandu",
+      "mappedBy": "jenis_pelayanan"
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "jenis_pelayanan"
+    },
+    "order_tambats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "jenis_pelayanan"
+    },
+    "order_yatches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-yatch.order-yatch",
+      "mappedBy": "jenis_pelayanan"
+    },
+    "order_air_bersihs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-air-bersih.order-air-bersih",
+      "mappedBy": "jenis_pelayanan"
     }
   }
 }

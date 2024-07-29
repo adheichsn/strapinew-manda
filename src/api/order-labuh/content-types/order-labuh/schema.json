@@ -1,0 +1,112 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_labuhs",
+  "info": {
+    "singularName": "order-labuh",
+    "pluralName": "order-labuhs",
+    "displayName": "Order Labuh",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "start_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "finish_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "gt_kapal": {
+      "type": "integer",
+      "min": 0,
+      "required": true
+    },
+    "total_tarif": {
+      "type": "decimal",
+      "min": 0,
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "payment_deadline": {
+      "type": "datetime",
+      "required": true
+    },
+    "snap_token": {
+      "type": "text"
+    },
+    "attachment": {
+      "type": "string"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "order_labuhs"
+    },
+    "payment_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::payment-status.payment-status",
+      "inversedBy": "order_labuhs"
+    },
+    "jasa": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jasa.jasa",
+      "inversedBy": "order_labuhs"
+    },
+    "jenis_pelayanan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pelayanan.jenis-pelayanan",
+      "inversedBy": "order_labuhs"
+    },
+    "kapal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kapal.kapal",
+      "inversedBy": "order_labuhs"
+    },
+    "tarif_dasar": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tarif-dasar.tarif-dasar",
+      "inversedBy": "order_labuhs"
+    },
+    "jenis_pandu": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-pandu.jenis-pandu",
+      "inversedBy": "order_labuhs"
+    },
+    "tarif_pandu": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tarif-pandu.tarif-pandu",
+      "inversedBy": "order_labuhs"
+    },
+    "service_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-status.service-status",
+      "inversedBy": "order_labuhs"
+    },
+    "role_reflect": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::role-reflect.role-reflect",
+      "inversedBy": "order_labuhs"
+    }
+  }
+}

@@ -403,9 +403,12 @@ export interface PluginUploadFile extends Schema.CollectionType {
     folderPath: Attribute.String &
       Attribute.Required &
       Attribute.Private &
-      Attribute.SetMinMax<{
-        min: 1;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -441,9 +444,12 @@ export interface PluginUploadFolder extends Schema.CollectionType {
   attributes: {
     name: Attribute.String &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 1;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     pathId: Attribute.Integer & Attribute.Required & Attribute.Unique;
     parent: Attribute.Relation<
       'plugin::upload.folder',
@@ -462,9 +468,12 @@ export interface PluginUploadFolder extends Schema.CollectionType {
     >;
     path: Attribute.String &
       Attribute.Required &
-      Attribute.SetMinMax<{
-        min: 1;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -475,6 +484,105 @@ export interface PluginUploadFolder extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::upload.folder',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginContentReleasesRelease extends Schema.CollectionType {
+  collectionName: 'strapi_releases';
+  info: {
+    singularName: 'release';
+    pluralName: 'releases';
+    displayName: 'Release';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
+    actions: Attribute.Relation<
+      'plugin::content-releases.release',
+      'oneToMany',
+      'plugin::content-releases.release-action'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::content-releases.release',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::content-releases.release',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginContentReleasesReleaseAction
+  extends Schema.CollectionType {
+  collectionName: 'strapi_release_actions';
+  info: {
+    singularName: 'release-action';
+    pluralName: 'release-actions';
+    displayName: 'Release Action';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    type: Attribute.Enumeration<['publish', 'unpublish']> & Attribute.Required;
+    entry: Attribute.Relation<
+      'plugin::content-releases.release-action',
+      'morphToOne'
+    >;
+    contentType: Attribute.String & Attribute.Required;
+    locale: Attribute.String;
+    release: Attribute.Relation<
+      'plugin::content-releases.release-action',
+      'manyToOne',
+      'plugin::content-releases.release'
+    >;
+    isEntryValid: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::content-releases.release-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::content-releases.release-action',
       'oneToOne',
       'admin::user'
     > &
@@ -504,10 +612,13 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String &
-      Attribute.SetMinMax<{
-        min: 1;
-        max: 50;
-      }>;
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
     code: Attribute.String & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -631,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -660,6 +770,26 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    order_labuhs: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    role_reflect: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::role-reflect.role-reflect'
+    >;
+    order_tambats: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -677,30 +807,35 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiCountrieCountrie extends Schema.CollectionType {
+export interface ApiCountryCountry extends Schema.CollectionType {
   collectionName: 'countries';
   info: {
-    singularName: 'countrie';
+    singularName: 'country';
     pluralName: 'countries';
-    displayName: 'countrie';
+    displayName: 'Country';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String;
-    short_code: Attribute.String;
+    code: Attribute.String & Attribute.Required & Attribute.Unique;
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    kapals: Attribute.Relation<
+      'api::country.country',
+      'oneToMany',
+      'api::kapal.kapal'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::countrie.countrie',
+      'api::country.country',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::countrie.countrie',
+      'api::country.country',
       'oneToOne',
       'admin::user'
     > &
@@ -713,15 +848,25 @@ export interface ApiCurrencyCurrency extends Schema.CollectionType {
   info: {
     singularName: 'currency';
     pluralName: 'currencies';
-    displayName: 'currency';
+    displayName: 'Currency';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    amount: Attribute.Decimal;
-    date: Attribute.Date;
-    rate_dollar: Attribute.Decimal;
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    symbol: Attribute.String & Attribute.Required;
+    tarif_dasars: Attribute.Relation<
+      'api::currency.currency',
+      'oneToMany',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    tarif_pandus: Attribute.Relation<
+      'api::currency.currency',
+      'oneToMany',
+      'api::tarif-pandu.tarif-pandu'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -740,455 +885,70 @@ export interface ApiCurrencyCurrency extends Schema.CollectionType {
   };
 }
 
-export interface ApiDataKapalDataKapal extends Schema.CollectionType {
-  collectionName: 'data_kapals';
+export interface ApiJasaJasa extends Schema.CollectionType {
+  collectionName: 'jasas';
   info: {
-    singularName: 'data-kapal';
-    pluralName: 'data-kapals';
-    displayName: 'data_kapal';
+    singularName: 'jasa';
+    pluralName: 'jasas';
+    displayName: 'Jasa';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    nama_kapal: Attribute.String;
-    milik: Attribute.String;
-    panjang_kapal: Attribute.String;
-    sarat_muka_kapal: Attribute.String;
-    sarat_belakang_kapal: Attribute.String;
-    dwt: Attribute.String;
-    datang_dari: Attribute.String;
-    tujuan: Attribute.String;
-    bendera_kebangsaan: Attribute.Relation<
-      'api::data-kapal.data-kapal',
-      'oneToOne',
-      'api::countrie.countrie'
-    >;
-    jenis_kapal: Attribute.Relation<
-      'api::data-kapal.data-kapal',
-      'oneToMany',
-      'api::jenis-kapal.jenis-kapal'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::data-kapal.data-kapal',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::data-kapal.data-kapal',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiDetailJenisJasaDetailJenisJasa
-  extends Schema.CollectionType {
-  collectionName: 'detail_jenis_jasas';
-  info: {
-    singularName: 'detail-jenis-jasa';
-    pluralName: 'detail-jenis-jasas';
-    displayName: 'detail_jenis_jasa';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    detail_jenis_jasa: Attribute.String;
-    jenis_pelayanan: Attribute.Relation<
-      'api::detail-jenis-jasa.detail-jenis-jasa',
-      'oneToMany',
-      'api::jenis-pelayanan.jenis-pelayanan'
-    >;
-    nama_jasa: Attribute.Relation<
-      'api::detail-jenis-jasa.detail-jenis-jasa',
-      'oneToMany',
-      'api::jenis-jasa.jenis-jasa'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::detail-jenis-jasa.detail-jenis-jasa',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::detail-jenis-jasa.detail-jenis-jasa',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiHitunganEtmalHitunganEtmal extends Schema.CollectionType {
-  collectionName: 'hitungan_etmals';
-  info: {
-    singularName: 'hitungan-etmal';
-    pluralName: 'hitungan-etmals';
-    displayName: 'hitungan_etmal';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    dasar_etmal: Attribute.Float;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::hitungan-etmal.hitungan-etmal',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::hitungan-etmal.hitungan-etmal',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJasaAirBersihJasaAirBersih extends Schema.CollectionType {
-  collectionName: 'jasa_air_bersihs';
-  info: {
-    singularName: 'jasa-air-bersih';
-    pluralName: 'jasa-air-bersihs';
-    displayName: 'jasa_air_bersih';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    start_layanan: Attribute.DateTime;
-    finish_layanan: Attribute.DateTime;
-    qty: Attribute.Integer;
-    total_tarif: Attribute.Decimal;
-    keterangan: Attribute.String;
-    data_kapal: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::data-kapal.data-kapal'
-    >;
-    jenis_pelayanan: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::jenis-pelayanan.jenis-pelayanan'
-    >;
-    tarif_dasar: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::tarif-dasar.tarif-dasar'
-    >;
-    status: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::status-service.status-service'
-    >;
-    assign_to_id: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::roless.roless'
-    >;
-    satuan_details: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToMany',
-      'api::satuan-detail.satuan-detail'
-    >;
-    file: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::jasa-air-bersih.jasa-air-bersih',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJasaLabuhJasaLabuh extends Schema.CollectionType {
-  collectionName: 'jasa_labuhs';
-  info: {
-    singularName: 'jasa-labuh';
-    pluralName: 'jasa-labuhs';
-    displayName: 'jasa_labuh';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    start_layanan: Attribute.DateTime;
-    finish_layanan: Attribute.DateTime;
-    gt_kapal: Attribute.Integer;
-    pandu: Attribute.String;
-    total_tarif: Attribute.Decimal;
-    description: Attribute.String;
-    name: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    data_kapal: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::data-kapal.data-kapal'
-    >;
-    jenis_kapal: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::jenis-kapal.jenis-kapal'
-    >;
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
     jenis_jasa: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
+      'api::jasa.jasa',
+      'manyToOne',
       'api::jenis-jasa.jenis-jasa'
-    >;
-    detail_jenis_jasa: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::detail-jenis-jasa.detail-jenis-jasa'
-    >;
-    jenis_pelayanan: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::jenis-pelayanan.jenis-pelayanan'
-    >;
-    tarif_dasar: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::tarif-dasar.tarif-dasar'
-    >;
-    tarif_pandu: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::tarif-pandu.tarif-pandu'
-    >;
-    status: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::status-service.status-service'
-    >;
-    assign_to_id: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::roless.roless'
-    >;
-    satuan_detail: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToMany',
-      'api::satuan-detail.satuan-detail'
-    >;
-    file: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::jasa-labuh.jasa-labuh',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJasaTambatJasaTambat extends Schema.CollectionType {
-  collectionName: 'jasa_tambats';
-  info: {
-    singularName: 'jasa-tambat';
-    pluralName: 'jasa-tambats';
-    displayName: 'jasa_tambat';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    start_layanan: Attribute.DateTime;
-    finish_layanan: Attribute.DateTime;
-    gt_kapal: Attribute.Integer;
-    pandu: Attribute.String;
-    total_etmal: Attribute.Integer;
-    total_tarif: Attribute.Decimal;
-    description: Attribute.Text;
-    name: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    data_kapal: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'api::data-kapal.data-kapal'
     >;
     jenis_kapal: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
+      'api::jasa.jasa',
+      'manyToOne',
       'api::jenis-kapal.jenis-kapal'
     >;
-    jenis_jasa: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'api::jenis-jasa.jenis-jasa'
+    satuan_jasa: Attribute.Relation<
+      'api::jasa.jasa',
+      'manyToOne',
+      'api::satuan-jasa.satuan-jasa'
     >;
-    detail_jenis_jasa: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'api::detail-jenis-jasa.detail-jenis-jasa'
-    >;
-    jenis_pelayanan: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
+    jenis_pelayanans: Attribute.Relation<
+      'api::jasa.jasa',
+      'manyToMany',
       'api::jenis-pelayanan.jenis-pelayanan'
     >;
-    tarif_pandu: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'api::tarif-pandu.tarif-pandu'
-    >;
-    status: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToMany',
-      'api::status-service.status-service'
-    >;
-    file: Attribute.Media;
-    tarif_dasar: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
+    tarif_dasars: Attribute.Relation<
+      'api::jasa.jasa',
       'oneToMany',
       'api::tarif-dasar.tarif-dasar'
     >;
-    assign_to_id: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
+    order_labuhs: Attribute.Relation<
+      'api::jasa.jasa',
       'oneToMany',
-      'api::roless.roless'
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::jasa.jasa',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::jasa.jasa',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::jasa.jasa',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToOne',
-      'admin::user'
-    > &
+    createdBy: Attribute.Relation<'api::jasa.jasa', 'oneToOne', 'admin::user'> &
       Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::jasa-tambat.jasa-tambat',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJasaYatchJasaYatch extends Schema.CollectionType {
-  collectionName: 'jasa_yatches';
-  info: {
-    singularName: 'jasa-yatch';
-    pluralName: 'jasa-yatches';
-    displayName: 'jasa_yatch';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    start_layanan: Attribute.DateTime;
-    finish_layanan: Attribute.DateTime;
-    gt_kapal: Attribute.Integer;
-    total_tarif: Attribute.Decimal;
-    description: Attribute.String;
-    name: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    data_kapal: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::data-kapal.data-kapal'
-    >;
-    jenis_kapal: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::jenis-kapal.jenis-kapal'
-    >;
-    jenis_jasa: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::jenis-jasa.jenis-jasa'
-    >;
-    detail_jenis_jasa: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::detail-jenis-jasa.detail-jenis-jasa'
-    >;
-    jenis_pelayanan: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::jenis-pelayanan.jenis-pelayanan'
-    >;
-    tarif_dasar: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::tarif-dasar.tarif-dasar'
-    >;
-    status: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::status-service.status-service'
-    >;
-    assign_to_id: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::roless.roless'
-    >;
-    satuan_detail: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToMany',
-      'api::satuan-detail.satuan-detail'
-    >;
-    file: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::jasa-yatch.jasa-yatch',
-      'oneToOne',
-      'admin::user'
-    > &
+    updatedBy: Attribute.Relation<'api::jasa.jasa', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1198,13 +958,20 @@ export interface ApiJenisJasaJenisJasa extends Schema.CollectionType {
   info: {
     singularName: 'jenis-jasa';
     pluralName: 'jenis-jasas';
-    displayName: 'jenis_jasa';
+    displayName: 'Jenis Jasa';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    nama_jasa: Attribute.String;
+    jenis: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    jasas: Attribute.Relation<
+      'api::jenis-jasa.jenis-jasa',
+      'oneToMany',
+      'api::jasa.jasa'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1228,13 +995,25 @@ export interface ApiJenisKapalJenisKapal extends Schema.CollectionType {
   info: {
     singularName: 'jenis-kapal';
     pluralName: 'jenis-kapals';
-    displayName: 'jenis_kapal';
+    displayName: 'Jenis Kapal';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    jenis_kapal: Attribute.String;
+    jenis: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    kapals: Attribute.Relation<
+      'api::jenis-kapal.jenis-kapal',
+      'oneToMany',
+      'api::kapal.kapal'
+    >;
+    jasas: Attribute.Relation<
+      'api::jenis-kapal.jenis-kapal',
+      'oneToMany',
+      'api::jasa.jasa'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1246,6 +1025,48 @@ export interface ApiJenisKapalJenisKapal extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::jenis-kapal.jenis-kapal',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiJenisPanduJenisPandu extends Schema.CollectionType {
+  collectionName: 'jenis_pandus';
+  info: {
+    singularName: 'jenis-pandu';
+    pluralName: 'jenis-pandus';
+    displayName: 'Jenis Pandu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    jenis: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    tarif_pandus: Attribute.Relation<
+      'api::jenis-pandu.jenis-pandu',
+      'oneToMany',
+      'api::tarif-pandu.tarif-pandu'
+    >;
+    order_labuhs: Attribute.Relation<
+      'api::jenis-pandu.jenis-pandu',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::jenis-pandu.jenis-pandu',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::jenis-pandu.jenis-pandu',
       'oneToOne',
       'admin::user'
     > &
@@ -1258,30 +1079,127 @@ export interface ApiJenisPelayananJenisPelayanan extends Schema.CollectionType {
   info: {
     singularName: 'jenis-pelayanan';
     pluralName: 'jenis-pelayanans';
-    displayName: 'jenis_pelayanan';
+    displayName: 'Jenis Pelayanan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    jenis: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    jasas: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'manyToMany',
+      'api::jasa.jasa'
+    >;
+    tarif_dasars: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    tarif_pandus: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::tarif-pandu.tarif-pandu'
+    >;
+    order_labuhs: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::jenis-pelayanan.jenis-pelayanan',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiKapalKapal extends Schema.CollectionType {
+  collectionName: 'kapals';
+  info: {
+    singularName: 'kapal';
+    pluralName: 'kapals';
+    displayName: 'Kapal';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    jenis_pelayanan: Attribute.String;
-    satuan_tarif: Attribute.Relation<
-      'api::jenis-pelayanan.jenis-pelayanan',
+    name: Attribute.String & Attribute.Required;
+    milik: Attribute.String;
+    panjang_kapal: Attribute.String;
+    sarat_muka_kapal: Attribute.String;
+    sarat_belakang_kapal: Attribute.String;
+    dwt: Attribute.String;
+    country: Attribute.Relation<
+      'api::kapal.kapal',
+      'manyToOne',
+      'api::country.country'
+    >;
+    jenis_kapal: Attribute.Relation<
+      'api::kapal.kapal',
+      'manyToOne',
+      'api::jenis-kapal.jenis-kapal'
+    >;
+    order_labuhs: Attribute.Relation<
+      'api::kapal.kapal',
       'oneToMany',
-      'api::satuan-bayar.satuan-bayar'
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::kapal.kapal',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::kapal.kapal',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::kapal.kapal',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::jenis-pelayanan.jenis-pelayanan',
+      'api::kapal.kapal',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::jenis-pelayanan.jenis-pelayanan',
+      'api::kapal.kapal',
       'oneToOne',
       'admin::user'
     > &
@@ -1289,98 +1207,89 @@ export interface ApiJenisPelayananJenisPelayanan extends Schema.CollectionType {
   };
 }
 
-export interface ApiMedicalMedical extends Schema.CollectionType {
-  collectionName: 'medicals';
+export interface ApiOrderAirBersihOrderAirBersih extends Schema.CollectionType {
+  collectionName: 'order_air_bersihs';
   info: {
-    singularName: 'medical';
-    pluralName: 'medicals';
-    displayName: 'medical';
+    singularName: 'order-air-bersih';
+    pluralName: 'order-air-bersihs';
+    displayName: 'Order Air Bersih';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String;
-    stock: Attribute.Integer;
-    price: Attribute.Integer;
-    description: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::medical.medical',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::medical.medical',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPasswordResetPasswordReset extends Schema.CollectionType {
-  collectionName: 'password_resets';
-  info: {
-    singularName: 'password-reset';
-    pluralName: 'password-resets';
-    displayName: 'password_reset';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    email: Attribute.String;
-    token: Attribute.String;
-    create_at: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::password-reset.password-reset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::password-reset.password-reset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPermissionRolePermissionRole extends Schema.CollectionType {
-  collectionName: 'permission_roles';
-  info: {
-    singularName: 'permission-role';
-    pluralName: 'permission-roles';
-    displayName: 'permission_role';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    roles: Attribute.Relation<
-      'api::permission-role.permission-role',
-      'oneToMany',
-      'api::roless.roless'
+    start_date: Attribute.DateTime & Attribute.Required;
+    finish_date: Attribute.DateTime & Attribute.Required;
+    quantity: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    total_tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    description: Attribute.Text;
+    is_verified: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    payment_deadline: Attribute.DateTime & Attribute.Required;
+    snap_token: Attribute.Text;
+    attachment: Attribute.String;
+    payment_status: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::payment-status.payment-status'
+    >;
+    jasa: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::jasa.jasa'
+    >;
+    jenis_pelayanan: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::jenis-pelayanan.jenis-pelayanan'
+    >;
+    kapal: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::kapal.kapal'
+    >;
+    tarif_dasar: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    service_status: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::service-status.service-status'
+    >;
+    role_reflect: Attribute.Relation<
+      'api::order-air-bersih.order-air-bersih',
+      'manyToOne',
+      'api::role-reflect.role-reflect'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::permission-role.permission-role',
+      'api::order-air-bersih.order-air-bersih',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::permission-role.permission-role',
+      'api::order-air-bersih.order-air-bersih',
       'oneToOne',
       'admin::user'
     > &
@@ -1388,29 +1297,104 @@ export interface ApiPermissionRolePermissionRole extends Schema.CollectionType {
   };
 }
 
-export interface ApiPermissionssPermissionss extends Schema.CollectionType {
-  collectionName: 'permissionsss';
+export interface ApiOrderLabuhOrderLabuh extends Schema.CollectionType {
+  collectionName: 'order_labuhs';
   info: {
-    singularName: 'permissionss';
-    pluralName: 'permissionsss';
-    displayName: 'permission';
+    singularName: 'order-labuh';
+    pluralName: 'order-labuhs';
+    displayName: 'Order Labuh';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
+    start_date: Attribute.DateTime & Attribute.Required;
+    finish_date: Attribute.DateTime & Attribute.Required;
+    gt_kapal: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    total_tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    description: Attribute.Text;
+    is_verified: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    payment_deadline: Attribute.DateTime & Attribute.Required;
+    snap_token: Attribute.Text;
+    attachment: Attribute.String;
+    users_permissions_user: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    payment_status: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::payment-status.payment-status'
+    >;
+    jasa: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::jasa.jasa'
+    >;
+    jenis_pelayanan: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::jenis-pelayanan.jenis-pelayanan'
+    >;
+    kapal: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::kapal.kapal'
+    >;
+    tarif_dasar: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    jenis_pandu: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::jenis-pandu.jenis-pandu'
+    >;
+    tarif_pandu: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::tarif-pandu.tarif-pandu'
+    >;
+    service_status: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::service-status.service-status'
+    >;
+    role_reflect: Attribute.Relation<
+      'api::order-labuh.order-labuh',
+      'manyToOne',
+      'api::role-reflect.role-reflect'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::permissionss.permissionss',
+      'api::order-labuh.order-labuh',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::permissionss.permissionss',
+      'api::order-labuh.order-labuh',
       'oneToOne',
       'admin::user'
     > &
@@ -1418,38 +1402,309 @@ export interface ApiPermissionssPermissionss extends Schema.CollectionType {
   };
 }
 
-export interface ApiRoleUserRoleUser extends Schema.CollectionType {
-  collectionName: 'role_users';
+export interface ApiOrderTambatOrderTambat extends Schema.CollectionType {
+  collectionName: 'order_tambats';
   info: {
-    singularName: 'role-user';
-    pluralName: 'role-users';
-    displayName: 'role_user';
+    singularName: 'order-tambat';
+    pluralName: 'order-tambats';
+    displayName: 'Order Tambat';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    start_date: Attribute.DateTime & Attribute.Required;
+    finish_date: Attribute.DateTime & Attribute.Required;
+    gt_kapal: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    total_etmal: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    total_tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    description: Attribute.Text;
+    is_verified: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    payment_deadline: Attribute.DateTime & Attribute.Required;
+    snap_token: Attribute.Text;
+    attachment: Attribute.String;
+    users_permissions_user: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    payment_status: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::payment-status.payment-status'
+    >;
+    jasa: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::jasa.jasa'
+    >;
+    jenis_pelayanan: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::jenis-pelayanan.jenis-pelayanan'
+    >;
+    kapal: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::kapal.kapal'
+    >;
+    tarif_dasar: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    tarif_pandu: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::tarif-pandu.tarif-pandu'
+    >;
+    service_status: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::service-status.service-status'
+    >;
+    role_reflect: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'manyToOne',
+      'api::role-reflect.role-reflect'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order-tambat.order-tambat',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderYatchOrderYatch extends Schema.CollectionType {
+  collectionName: 'order_yatches';
+  info: {
+    singularName: 'order-yatch';
+    pluralName: 'order-yatches';
+    displayName: 'Order Yatch';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    start_date: Attribute.DateTime & Attribute.Required;
+    finish_date: Attribute.DateTime & Attribute.Required;
+    gt_kapal: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    total_tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    description: Attribute.Text;
+    is_verified: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    payment_deadline: Attribute.DateTime & Attribute.Required;
+    snap_token: Attribute.Text;
+    attachment: Attribute.String;
+    users_permissions_user: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    payment_status: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::payment-status.payment-status'
+    >;
+    jasa: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::jasa.jasa'
+    >;
+    jenis_pelayanan: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::jenis-pelayanan.jenis-pelayanan'
+    >;
+    kapal: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::kapal.kapal'
+    >;
+    tarif_dasar: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::tarif-dasar.tarif-dasar'
+    >;
+    service_status: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::service-status.service-status'
+    >;
+    role_reflect: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'manyToOne',
+      'api::role-reflect.role-reflect'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order-yatch.order-yatch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaymentStatusPaymentStatus extends Schema.CollectionType {
+  collectionName: 'payment_statuses';
+  info: {
+    singularName: 'payment-status';
+    pluralName: 'payment-statuses';
+    displayName: 'Payment Status';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    status: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    order_labuhs: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::payment-status.payment-status',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRoleReflectRoleReflect extends Schema.CollectionType {
+  collectionName: 'role_reflects';
+  info: {
+    singularName: 'role-reflect';
+    pluralName: 'role-reflects';
+    displayName: 'Role Reflect';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    role: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
     users: Attribute.Relation<
-      'api::role-user.role-user',
+      'api::role-reflect.role-reflect',
       'oneToMany',
       'plugin::users-permissions.user'
     >;
-    roles: Attribute.Relation<
-      'api::role-user.role-user',
+    order_labuhs: Attribute.Relation<
+      'api::role-reflect.role-reflect',
       'oneToMany',
-      'api::roless.roless'
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::role-reflect.role-reflect',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::role-reflect.role-reflect',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::role-reflect.role-reflect',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::role-user.role-user',
+      'api::role-reflect.role-reflect',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::role-user.role-user',
+      'api::role-reflect.role-reflect',
       'oneToOne',
       'admin::user'
     > &
@@ -1457,29 +1712,35 @@ export interface ApiRoleUserRoleUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiRolessRoless extends Schema.CollectionType {
-  collectionName: 'rolesss';
+export interface ApiSatuanJasaSatuanJasa extends Schema.CollectionType {
+  collectionName: 'satuan_jasas';
   info: {
-    singularName: 'roless';
-    pluralName: 'rolesss';
-    displayName: 'roles';
+    singularName: 'satuan-jasa';
+    pluralName: 'satuan-jasas';
+    displayName: 'Satuan Jasa';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
+    satuan: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.Text;
+    jasas: Attribute.Relation<
+      'api::satuan-jasa.satuan-jasa',
+      'oneToMany',
+      'api::jasa.jasa'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::roless.roless',
+      'api::satuan-jasa.satuan-jasa',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::roless.roless',
+      'api::satuan-jasa.satuan-jasa',
       'oneToOne',
       'admin::user'
     > &
@@ -1487,89 +1748,51 @@ export interface ApiRolessRoless extends Schema.CollectionType {
   };
 }
 
-export interface ApiSatuanBayarSatuanBayar extends Schema.CollectionType {
-  collectionName: 'satuan_bayars';
+export interface ApiServiceStatusServiceStatus extends Schema.CollectionType {
+  collectionName: 'service_statuses';
   info: {
-    singularName: 'satuan-bayar';
-    pluralName: 'satuan-bayars';
-    displayName: 'satuan_bayar';
+    singularName: 'service-status';
+    pluralName: 'service-statuses';
+    displayName: 'Service Status';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    satuan_tarif: Attribute.String;
+    status: Attribute.String & Attribute.Required & Attribute.Unique;
+    label: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    order_labuhs: Attribute.Relation<
+      'api::service-status.service-status',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::service-status.service-status',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
+    order_yatches: Attribute.Relation<
+      'api::service-status.service-status',
+      'oneToMany',
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::service-status.service-status',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::satuan-bayar.satuan-bayar',
+      'api::service-status.service-status',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::satuan-bayar.satuan-bayar',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiSatuanDetailSatuanDetail extends Schema.CollectionType {
-  collectionName: 'satuan_details';
-  info: {
-    singularName: 'satuan-detail';
-    pluralName: 'satuan-details';
-    displayName: 'satuan_detail';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    satuan: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::satuan-detail.satuan-detail',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::satuan-detail.satuan-detail',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiStatusServiceStatusService extends Schema.CollectionType {
-  collectionName: 'status_services';
-  info: {
-    singularName: 'status-service';
-    pluralName: 'status-services';
-    displayName: 'status_service';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    status: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::status-service.status-service',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::status-service.status-service',
+      'api::service-status.service-status',
       'oneToOne',
       'admin::user'
     > &
@@ -1582,40 +1805,54 @@ export interface ApiTarifDasarTarifDasar extends Schema.CollectionType {
   info: {
     singularName: 'tarif-dasar';
     pluralName: 'tarif-dasars';
-    displayName: 'tarif_dasar';
-    description: '';
+    displayName: 'Tarif Dasar';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    tarif_dasar: Attribute.Decimal;
-    currency: Attribute.Decimal;
-    currency_usd: Attribute.Decimal;
-    jenis_jasa: Attribute.Relation<
+    tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    jasa: Attribute.Relation<
       'api::tarif-dasar.tarif-dasar',
-      'oneToMany',
-      'api::jenis-jasa.jenis-jasa'
+      'manyToOne',
+      'api::jasa.jasa'
+    >;
+    currency: Attribute.Relation<
+      'api::tarif-dasar.tarif-dasar',
+      'manyToOne',
+      'api::currency.currency'
     >;
     jenis_pelayanan: Attribute.Relation<
       'api::tarif-dasar.tarif-dasar',
-      'oneToMany',
+      'manyToOne',
       'api::jenis-pelayanan.jenis-pelayanan'
     >;
-    jenis_kapal: Attribute.Relation<
+    order_labuhs: Attribute.Relation<
       'api::tarif-dasar.tarif-dasar',
       'oneToMany',
-      'api::jenis-kapal.jenis-kapal'
+      'api::order-labuh.order-labuh'
     >;
-    satuan_bayar: Attribute.Relation<
+    order_tambats: Attribute.Relation<
       'api::tarif-dasar.tarif-dasar',
       'oneToMany',
-      'api::satuan-bayar.satuan-bayar'
+      'api::order-tambat.order-tambat'
     >;
-    detail_jenis_jasa: Attribute.Relation<
+    order_yatches: Attribute.Relation<
       'api::tarif-dasar.tarif-dasar',
       'oneToMany',
-      'api::detail-jenis-jasa.detail-jenis-jasa'
+      'api::order-yatch.order-yatch'
+    >;
+    order_air_bersihs: Attribute.Relation<
+      'api::tarif-dasar.tarif-dasar',
+      'oneToMany',
+      'api::order-air-bersih.order-air-bersih'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1640,14 +1877,45 @@ export interface ApiTarifPanduTarifPandu extends Schema.CollectionType {
   info: {
     singularName: 'tarif-pandu';
     pluralName: 'tarif-pandus';
-    displayName: 'tarif_pandu';
+    displayName: 'Tarif Pandu';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String;
-    price: Attribute.Decimal;
+    tarif: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    jenis_pandu: Attribute.Relation<
+      'api::tarif-pandu.tarif-pandu',
+      'manyToOne',
+      'api::jenis-pandu.jenis-pandu'
+    >;
+    currency: Attribute.Relation<
+      'api::tarif-pandu.tarif-pandu',
+      'manyToOne',
+      'api::currency.currency'
+    >;
+    jenis_pelayanan: Attribute.Relation<
+      'api::tarif-pandu.tarif-pandu',
+      'manyToOne',
+      'api::jenis-pelayanan.jenis-pelayanan'
+    >;
+    order_labuhs: Attribute.Relation<
+      'api::tarif-pandu.tarif-pandu',
+      'oneToMany',
+      'api::order-labuh.order-labuh'
+    >;
+    order_tambats: Attribute.Relation<
+      'api::tarif-pandu.tarif-pandu',
+      'oneToMany',
+      'api::order-tambat.order-tambat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1659,37 +1927,6 @@ export interface ApiTarifPanduTarifPandu extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::tarif-pandu.tarif-pandu',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTerminalPelabuhanTerminalPelabuhan
-  extends Schema.CollectionType {
-  collectionName: 'terminal_pelabuhans';
-  info: {
-    singularName: 'terminal-pelabuhan';
-    pluralName: 'terminal-pelabuhans';
-    displayName: 'terminal_pelabuhan';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::terminal-pelabuhan.terminal-pelabuhan',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::terminal-pelabuhan.terminal-pelabuhan',
       'oneToOne',
       'admin::user'
     > &
@@ -1709,34 +1946,30 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
+      'plugin::content-releases.release': PluginContentReleasesRelease;
+      'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::countrie.countrie': ApiCountrieCountrie;
+      'api::country.country': ApiCountryCountry;
       'api::currency.currency': ApiCurrencyCurrency;
-      'api::data-kapal.data-kapal': ApiDataKapalDataKapal;
-      'api::detail-jenis-jasa.detail-jenis-jasa': ApiDetailJenisJasaDetailJenisJasa;
-      'api::hitungan-etmal.hitungan-etmal': ApiHitunganEtmalHitunganEtmal;
-      'api::jasa-air-bersih.jasa-air-bersih': ApiJasaAirBersihJasaAirBersih;
-      'api::jasa-labuh.jasa-labuh': ApiJasaLabuhJasaLabuh;
-      'api::jasa-tambat.jasa-tambat': ApiJasaTambatJasaTambat;
-      'api::jasa-yatch.jasa-yatch': ApiJasaYatchJasaYatch;
+      'api::jasa.jasa': ApiJasaJasa;
       'api::jenis-jasa.jenis-jasa': ApiJenisJasaJenisJasa;
       'api::jenis-kapal.jenis-kapal': ApiJenisKapalJenisKapal;
+      'api::jenis-pandu.jenis-pandu': ApiJenisPanduJenisPandu;
       'api::jenis-pelayanan.jenis-pelayanan': ApiJenisPelayananJenisPelayanan;
-      'api::medical.medical': ApiMedicalMedical;
-      'api::password-reset.password-reset': ApiPasswordResetPasswordReset;
-      'api::permission-role.permission-role': ApiPermissionRolePermissionRole;
-      'api::permissionss.permissionss': ApiPermissionssPermissionss;
-      'api::role-user.role-user': ApiRoleUserRoleUser;
-      'api::roless.roless': ApiRolessRoless;
-      'api::satuan-bayar.satuan-bayar': ApiSatuanBayarSatuanBayar;
-      'api::satuan-detail.satuan-detail': ApiSatuanDetailSatuanDetail;
-      'api::status-service.status-service': ApiStatusServiceStatusService;
+      'api::kapal.kapal': ApiKapalKapal;
+      'api::order-air-bersih.order-air-bersih': ApiOrderAirBersihOrderAirBersih;
+      'api::order-labuh.order-labuh': ApiOrderLabuhOrderLabuh;
+      'api::order-tambat.order-tambat': ApiOrderTambatOrderTambat;
+      'api::order-yatch.order-yatch': ApiOrderYatchOrderYatch;
+      'api::payment-status.payment-status': ApiPaymentStatusPaymentStatus;
+      'api::role-reflect.role-reflect': ApiRoleReflectRoleReflect;
+      'api::satuan-jasa.satuan-jasa': ApiSatuanJasaSatuanJasa;
+      'api::service-status.service-status': ApiServiceStatusServiceStatus;
       'api::tarif-dasar.tarif-dasar': ApiTarifDasarTarifDasar;
       'api::tarif-pandu.tarif-pandu': ApiTarifPanduTarifPandu;
-      'api::terminal-pelabuhan.terminal-pelabuhan': ApiTerminalPelabuhanTerminalPelabuhan;
     }
   }
 }

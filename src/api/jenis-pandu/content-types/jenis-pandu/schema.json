@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jenis_pandus",
+  "info": {
+    "singularName": "jenis-pandu",
+    "pluralName": "jenis-pandus",
+    "displayName": "Jenis Pandu"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jenis": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "tarif_pandus": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tarif-pandu.tarif-pandu",
+      "mappedBy": "jenis_pandu"
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "jenis_pandu"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kapals",
+  "info": {
+    "singularName": "kapal",
+    "pluralName": "kapals",
+    "displayName": "Kapal",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "milik": {
+      "type": "string"
+    },
+    "panjang_kapal": {
+      "type": "string"
+    },
+    "sarat_muka_kapal": {
+      "type": "string"
+    },
+    "sarat_belakang_kapal": {
+      "type": "string"
+    },
+    "dwt": {
+      "type": "string"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::country.country",
+      "inversedBy": "kapals"
+    },
+    "jenis_kapal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jenis-kapal.jenis-kapal",
+      "inversedBy": "kapals"
+    },
+    "order_labuhs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "kapal"
+    },
+    "order_tambats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "kapal"
+    },
+    "order_yatches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-yatch.order-yatch",
+      "mappedBy": "kapal"
+    },
+    "order_air_bersihs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-air-bersih.order-air-bersih",
+      "mappedBy": "kapal"
+    }
+  }
+}

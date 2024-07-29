@@ -4,47 +4,59 @@
   "info": {
     "singularName": "tarif-dasar",
     "pluralName": "tarif-dasars",
-    "displayName": "tarif_dasar",
-    "description": ""
+    "displayName": "Tarif Dasar"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "tarif_dasar": {
-      "type": "decimal"
+    "tarif": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "jasa": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jasa.jasa",
+      "inversedBy": "tarif_dasars"
     },
     "currency": {
-      "type": "decimal"
-    },
-    "currency_usd": {
-      "type": "decimal"
-    },
-    "jenis_jasa": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::jenis-jasa.jenis-jasa"
+      "relation": "manyToOne",
+      "target": "api::currency.currency",
+      "inversedBy": "tarif_dasars"
     },
     "jenis_pelayanan": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::jenis-pelayanan.jenis-pelayanan"
+      "relation": "manyToOne",
+      "target": "api::jenis-pelayanan.jenis-pelayanan",
+      "inversedBy": "tarif_dasars"
     },
-    "jenis_kapal": {
+    "order_labuhs": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::jenis-kapal.jenis-kapal"
+      "target": "api::order-labuh.order-labuh",
+      "mappedBy": "tarif_dasar"
     },
-    "satuan_bayar": {
+    "order_tambats": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::satuan-bayar.satuan-bayar"
+      "target": "api::order-tambat.order-tambat",
+      "mappedBy": "tarif_dasar"
     },
-    "detail_jenis_jasa": {
+    "order_yatches": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::detail-jenis-jasa.detail-jenis-jasa"
+      "target": "api::order-yatch.order-yatch",
+      "mappedBy": "tarif_dasar"
+    },
+    "order_air_bersihs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-air-bersih.order-air-bersih",
+      "mappedBy": "tarif_dasar"
     }
   }
 }
