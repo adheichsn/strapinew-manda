@@ -6,8 +6,8 @@ const { host, port, database, user, password } = parse(
 );
 
 module.exports = ({ env }) => ({
-  connection: {  
-    client: 'postgres',
+  connection: {
+    client: 'sqlite',
     connection: {
       host,
       port,
