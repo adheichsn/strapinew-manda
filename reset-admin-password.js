@@ -1,4 +1,7 @@
+// @ts-ignore
 const strapi = require('strapi');
+// @ts-ignore
+
 const strapiAdmin = require('strapi-admin');
 
 (async () => {
@@ -9,7 +12,7 @@ const strapiAdmin = require('strapi-admin');
   if (user) {
     const bcrypt = require('bcrypt');
     const saltRounds = 10;
-    const plainPassword = 'Filipi%46'; // Ganti dengan password baru
+    const plainPassword = '';
 
     bcrypt.hash(plainPassword, saltRounds, async function(err, hash) {
       if (err) throw err;
